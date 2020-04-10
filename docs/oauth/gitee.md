@@ -65,6 +65,7 @@ String authorizeUrl = authRequest.authorize(AuthStateUtils.createState());
 ```java
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.request.AuthGiteeRequest;
+import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,9 +87,9 @@ public class RestAuthController {
     }
 
     @RequestMapping("/callback")
-    public Object login(String code) {
+    public Object login(AuthCallback callback) {
         AuthRequest authRequest = getAuthRequest();
-        return authRequest.login(code);
+        return authRequest.login(callback);
     }
 
     private AuthRequest getAuthRequest() {
@@ -107,7 +108,7 @@ public class RestAuthController {
 
 ## 3. 授权结果
 
-注：数据以脱敏
+注：数据已脱敏
 
 ```json
 {

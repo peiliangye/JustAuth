@@ -47,16 +47,16 @@ public class AuthChecker {
      */
     public static void checkConfig(AuthConfig config, AuthSource source) {
         String redirectUri = config.getRedirectUri();
-        if (!GlobalAuthUtil.isHttpProtocol(redirectUri) && !GlobalAuthUtil.isHttpsProtocol(redirectUri)) {
+        if (!GlobalAuthUtils.isHttpProtocol(redirectUri) && !GlobalAuthUtils.isHttpsProtocol(redirectUri)) {
             throw new AuthException(AuthResponseStatus.ILLEGAL_REDIRECT_URI, source);
         }
         // facebook的回调地址必须为https的链接
-        if (AuthDefaultSource.FACEBOOK == source && !GlobalAuthUtil.isHttpsProtocol(redirectUri)) {
+        if (AuthDefaultSource.FACEBOOK == source && !GlobalAuthUtils.isHttpsProtocol(redirectUri)) {
             // Facebook's redirect uri must use the HTTPS protocol
             throw new AuthException(AuthResponseStatus.ILLEGAL_REDIRECT_URI, source);
         }
         // 支付宝在创建回调地址时，不允许使用localhost或者127.0.0.1
-        if (AuthDefaultSource.ALIPAY == source && GlobalAuthUtil.isLocalHost(redirectUri)) {
+        if (AuthDefaultSource.ALIPAY == source && GlobalAuthUtils.isLocalHost(redirectUri)) {
             // The redirect uri of alipay is forbidden to use localhost or 127.0.0.1
             throw new AuthException(AuthResponseStatus.ILLEGAL_REDIRECT_URI, source);
         }
@@ -91,6 +91,7 @@ public class AuthChecker {
      * 2. {@code state}为前端伪造，本身就不存在
      *
      * @param state          {@code state}一定不为空
+     * @param source         {@code source}当前授权平台
      * @param authStateCache {@code authStateCache} state缓存实现
      */
     public static void checkState(String state, AuthSource source, AuthStateCache authStateCache) {

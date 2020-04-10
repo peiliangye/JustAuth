@@ -723,6 +723,33 @@ public enum AuthDefaultSource implements AuthSource {
         public String userInfo() {
             return "https://api.twitter.com/1.1/users/show.json";
         }
-    }
+    },
 
+    /**
+     * 飞书
+     * 注意：该平台暂时存在问题，请不要使用。待修复完成后会重新发版
+     *
+     * @since 1.14.0
+     */
+    FEISHU{
+        @Override
+        public String authorize() {
+            return "https://open.feishu.cn/connect/qrconnect/page/sso/";
+        }
+
+        @Override
+        public String accessToken() {
+            return "https://open.feishu.cn/connect/qrconnect/oauth2/access_token/";
+        }
+
+        @Override
+        public String userInfo() {
+            return "https://open.feishu.cn/connect/qrconnect/oauth2/user_info/";
+        }
+
+        @Override
+        public String refresh() {
+            return "https://open.feishu.cn/connect/qrconnect/oauth2/access_token/";
+        }
+    }
 }
